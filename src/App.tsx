@@ -39,10 +39,6 @@ function App(props: propInterface) {
   function handleKeyDown(char: string) { // PUT THESE FUNCTIONS IN USE EFFECT (?)
     if (char === "Enter") char = '↵'
     if (char === "Backspace") char = '←'
-    if (char === '7') {
-        console.log(guessCount);
-        
-    }
     const checker = new RegExp('^[a-zA-Z←↵]{1}$')
     if (!checker.test(char) || guessCount === 6) { // not a valid key
       return
@@ -113,6 +109,29 @@ function App(props: propInterface) {
       }
       return v
     })
+    // let keys = Array.from(document.querySelectorAll('#keyboard button'))
+    // keys.forEach(el => {
+    // })
+    guessrow.forEach((item, index) => {
+      let key = document.querySelector(`[data-key='${guess[index]}']`)
+      if (key) {
+        if (key.classList.contains('rightSpot')) {
+
+        } else if (key.classList.contains('rightLetter')) {
+          if (item === 3) {
+            key.classList.remove('rightLetter')
+            key.classList.add('rightSpot')
+          }
+        } else if (key.classList.contains('wrong')) {
+          if (item > 1) {
+            key.classList.remove('wrong')
+            key.classList.add(CLASS_CODES[item])
+          }
+        } else {
+          key.classList.add(CLASS_CODES[item])
+        }
+      }
+    })
     setColorMatrix(current => {
       current[guessCount] = guessrow
       return current
@@ -125,7 +144,7 @@ function App(props: propInterface) {
 //   const forceUpdate = useCallback(() => updateState({}), [])
 
   useEffect(() => {
-    console.log(guessCount);
+    // console.log(guessCount);
     // guess('paapyp')
     document.documentElement.style.setProperty('--letterCount', props.letterCount.toString())
     // window.addEventListener('keydown', (e: KeyboardEvent) => {e.preventDefault();handleKeyDown(e.key)})

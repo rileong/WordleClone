@@ -65,7 +65,8 @@ div {
   grid-gap: 5px;
   min-height: 0;
   min-width: 0;
-  max-height: 50px;
+  /* max-height: 50px; */
+  max-height: 80%;
 }
 
 @font-face {
@@ -133,7 +134,9 @@ button.rightSpot {
 }
 
 #keyboard {
-  width: 80%;
+  /* width: 80%; */
+  width: 90%;
+  max-width: 500px;
   /* position: absolute; */
   bottom: 0px;
   /* transform: translateY(100%); */
@@ -146,9 +149,10 @@ button.rightSpot {
   padding: 10px;
   box-sizing: border-box;
   height: 100%;
-  width: 100%;
-  /* max-width: 250px; */
-  max-width: calc(var(--letterCount) * 42px);
+  width: 80%;
+  max-width: 300px;
+  /* max-width: calc(var(--letterCount) * 42px); */
+  /* max-width: 50%; */
   min-height: 0;
 }
 
