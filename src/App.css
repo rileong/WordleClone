@@ -1,38 +1,164 @@
 .App {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "CustomFont";
+  /* height: 100vh; */
+  /* flex-grow: 1; */
+  /* flex: 1; */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:root {
+  --letterCount: 6;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+div {
+  display: block;
+}
+
+.letterBox::before {
+  content: '';
+  display: inline-block;
+  padding-bottom: 100%;
+}
+
+.letterBox {
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: bold;
+  vertical-align: middle;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background-color: lightgray;
+  color: black;
+  text-transform: uppercase;
+  user-select: none;
+  min-height: 0;
+}
+
+@media (max-height: 600px) {
+  .letterBox {
+    font-size: 1em;
+    line-height: 1em;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* .lettersCont {
+  flex-direction: row;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  width: 100%;
+  flex: 1;
+} */
+
+.lettersCont {
+  display: grid;
+  grid-template-columns: repeat(var(--letterCount), 1fr);
+  grid-gap: 5px;
+  min-height: 0;
+  min-width: 0;
+  max-height: 50px;
+}
+
+@font-face {
+  font-family: "CustomFont";
+  src: url('/public/futura\ medium\ condensed\ bt.ttf')format("truetype");
+}
+
+.wrong {
+  background-color: gray;
+}
+
+.rightSpot {
+  background-color: dodgerblue;
+}
+
+.rightLetter {
+  background-color: gold;
+}
+
+button {
+  display: flex;
+  flex: 1;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  height: 60px;
+  margin: 0 5px 0 0;
+  border-width: 0;
   color: white;
+  background-color: #222;
+  font-weight: bold;
+  /* box-sizing: border-box; */
 }
 
-.App-link {
-  color: #61dafb;
+button.wrong {
+  background-color: gray;
+  color: black;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button.rightLetter {
+  background-color: gold;
+  color: black;
+}
+
+button.rightSpot {
+  background-color: dodgerblue;
+  color: black;
+}
+
+.row {
+  display: flex;
+  top: 8px;
+  margin: 0 auto 8px;
+  width: 100%;
+}
+
+.one-and-a-half {
+  flex: 1.5;
+  /* font-size: 12; */
+}
+
+.half {
+  flex: 0.5;
+}
+
+#keyboard {
+  width: 80%;
+  /* position: absolute; */
+  bottom: 0px;
+  /* transform: translateY(100%); */
+}
+
+#guesscont {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-gap: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  /* max-width: 250px; */
+  max-width: calc(var(--letterCount) * 42px);
+  min-height: 0;
+}
+
+#outerguess {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  overflow: hidden;
+  width: 100%;
+  height: calc(100vh - 290px);
+  /* height: auto; */
 }
