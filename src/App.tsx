@@ -1,5 +1,5 @@
 // import React from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './App.css';
 
 interface propInterface {
@@ -13,15 +13,38 @@ const CLASS_CODES = [
   "rightSpot"
 ]
 
-const WORD = "papasu"
+const WORD = "pauley"
 
 function App(props: propInterface) {
 
+  const [guessCount, setGuessCount] = useState(0)
+  const [colorMatrix, setColorMatrix] = useState<number[][]>([
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+  ])
+  const [charMatrix, setCharMatrix] = useState<string[][]>([
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+  ])
+
+  // const handleKeyDown = useCallback((char: string) => {
   function handleKeyDown(char: string) {
     if (char === "Enter") char = '↵'
     if (char === "Backspace") char = '←'
+    if (char === '7') {
+        console.log(guessCount);
+        
+    }
     const checker = new RegExp('^[a-zA-Z←↵]{1}$')
-    if (!checker.test(char)) { // not a valid key
+    if (!checker.test(char) || guessCount === 6) { // not a valid key
       return
     }
     if (char === '↵') {
@@ -50,7 +73,13 @@ function App(props: propInterface) {
       prev[guessCount] = cpy
       return [...prev]
     })
+    // forceUpdate()
   }
+
+  const actuallyHandleKeyDown = useCallback((e: KeyboardEvent) => {
+    e.preventDefault()
+    handleKeyDown(e.key)
+  }, [guessCount])
 
   function guess(guess: string) {
     guess = guess.toLowerCase()
@@ -89,45 +118,33 @@ function App(props: propInterface) {
       return current
     })
     setGuessCount(current => current + 1)
-    
+    // forceUpdate()
     // console.log(colorMatrix)
   }
-
-  const [guessCount, setGuessCount] = useState(0)
-  const [colorMatrix, setColorMatrix] = useState<number[][]>([
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-  ])
-  const [charMatrix, setCharMatrix] = useState<string[][]>([
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-  ])
+//   const [, updateState] = useState<any>()
+//   const forceUpdate = useCallback(() => updateState({}), [])
 
   useEffect(() => {
     console.log(guessCount);
     // guess('paapyp')
     document.documentElement.style.setProperty('--letterCount', props.letterCount.toString())
-    window.addEventListener('keydown', (e: KeyboardEvent) => {e.preventDefault();handleKeyDown(e.key)})
+    // window.addEventListener('keydown', (e: KeyboardEvent) => {e.preventDefault();handleKeyDown(e.key)})
+    window.addEventListener('keydown', actuallyHandleKeyDown)
     let keys = Array.from(document.getElementsByTagName('button'))
     keys.forEach(el => {
       el.addEventListener('click', () => handleKeyDown(el.getAttribute('data-key') || ''))
     })
 
     return () => {
-      window.removeEventListener('keydown', (e: KeyboardEvent) => {e.preventDefault();handleKeyDown(e.key)})
+      // window.removeEventListener('keydown', (e: KeyboardEvent) => {e.preventDefault();handleKeyDown(e.key)})
+      window.removeEventListener('keydown', actuallyHandleKeyDown)
       Array.from(document.getElementsByTagName('button')).forEach(el => {
-        el.removeEventListener('click', () => handleKeyDown(el.getAttribute('data-key') || ''))
+        // el.removeEventListener('click', () => handleKeyDown(el.getAttribute('data-key') || ''))
+        // el.removeEventListener('click', () => actuallyHandleButtonPress(el.getAttribute('data-key') || ''))
+        el.replaceWith(el.cloneNode(true))
       })
     }
-  }, [])
+  }, [guessCount])
 
   function renderItems(n: number) {
     let retval = []
@@ -145,6 +162,9 @@ function App(props: propInterface) {
       <div id="guesscont">
       <div className="lettersCont">
         {renderItems(0)}
+        {/* {charMatrix[0].map((item, i) => {
+            return <div className={"letterBox " + CLASS_CODES[colorMatrix[0][i] || 0]} key={i}>{charMatrix[0][i] || ''}</div>
+        })} */}
       </div>
       <div className="lettersCont">
         {renderItems(1)}
