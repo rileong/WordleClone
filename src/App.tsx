@@ -13,6 +13,8 @@ const CLASS_CODES = [
   "rightSpot"
 ]
 
+const WORD = "pauley"
+
 function App(props: propInterface) {
 
   function handleKeyDown(char: string) {
@@ -22,10 +24,49 @@ function App(props: propInterface) {
     if (!checker.test(char)) { // not a valid key
       return
     }
+    if (char === '↵') {
+
+      return
+    }
+    if (char === '←') {
+
+      return
+    }
+  }
+
+  function guess(guess: string) {
+    guess = guess.toLowerCase()
+    let guessrow: number[] = new Array(props.letterCount).fill(0)
+    let ignore = []
+    for (let i = 0; i < props.letterCount; i++) {
+      if (guess[i] === WORD[i]) {
+        guessrow[i] = 3
+        ignore.push(i)
+      }
+    }
+    for (let i = 0; i < props.letterCount; i++) {
+      if (ignore.includes(i)) continue;
+      let pos = WORD.indexOf(guess[i])
+      while (pos !== -1) {
+        if (!ignore.includes(pos)) {
+          guessrow[pos] = 2
+          ignore.push(pos)
+        }
+        pos = WORD.indexOf(guess[i], pos + 1)
+      }
+    }
+    guessrow.forEach(el => {
+      if (el === 0) el = 1
+    })
+    setColorMatrix(current => {
+      current[guessCount] = guessrow
+      return current
+    })
+    setGuessCount(current => current + 1)
   }
 
   const [guessCount, setGuessCount] = useState(0)
-  const [colorMatrix, setColorMatrix] = useState([
+  const [colorMatrix, setColorMatrix] = useState<number[][]>([
     [],
     [],
     [],
@@ -35,7 +76,6 @@ function App(props: propInterface) {
   ])
 
   useEffect(() => {
-    console.log(props);
     document.documentElement.style.setProperty('--letterCount', props.letterCount.toString())
     window.addEventListener('keydown', (e: KeyboardEvent) => {e.preventDefault();handleKeyDown(e.key)})
     let keys = Array.from(document.getElementsByTagName('button'))
@@ -85,7 +125,7 @@ function App(props: propInterface) {
       </div>
       </div>
       </div>
-      <div id="keyboard"><div className="row"><button className='wrong' data-key="q">q</button><button className='rightLetter' data-key="w">w</button><button className='rightSpot' data-key="e">e</button><button data-key="r">r</button><button data-key="t">t</button><button data-key="y">y</button><button data-key="u">u</button><button data-key="i">i</button><button data-key="o">o</button><button data-key="p">p</button></div><div className="row"><div className="spacer half"></div><button data-key="a">a</button><button data-key="s">s</button><button data-key="d">d</button><button data-key="f">f</button><button data-key="g">g</button><button data-key="h">h</button><button data-key="j">j</button><button data-key="k">k</button><button data-key="l">l</button><div className="spacer half"></div></div><div className="row"><button data-key="↵" className="one-and-a-half">enter</button><button data-key="z">z</button><button data-key="x">x</button><button data-key="c">c</button><button data-key="v">v</button><button data-key="b">b</button><button data-key="n">n</button><button data-key="m">m</button><button data-key="←" className="one-and-a-half"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-backspace" viewBox="0 0 16 16">
+      <div id="keyboard"><div className="row"><button data-key="q">q</button><button data-key="w">w</button><button data-key="e">e</button><button data-key="r">r</button><button data-key="t">t</button><button data-key="y">y</button><button data-key="u">u</button><button data-key="i">i</button><button data-key="o">o</button><button data-key="p">p</button></div><div className="row"><div className="spacer half"></div><button data-key="a">a</button><button data-key="s">s</button><button data-key="d">d</button><button data-key="f">f</button><button data-key="g">g</button><button data-key="h">h</button><button data-key="j">j</button><button data-key="k">k</button><button data-key="l">l</button><div className="spacer half"></div></div><div className="row"><button data-key="↵" className="one-and-a-half">enter</button><button data-key="z">z</button><button data-key="x">x</button><button data-key="c">c</button><button data-key="v">v</button><button data-key="b">b</button><button data-key="n">n</button><button data-key="m">m</button><button data-key="←" className="one-and-a-half"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-backspace" viewBox="0 0 16 16">
   <path d="M5.83 5.146a.5.5 0 0 0 0 .708L7.975 8l-2.147 2.146a.5.5 0 0 0 .707.708l2.147-2.147 2.146 2.147a.5.5 0 0 0 .707-.708L9.39 8l2.146-2.146a.5.5 0 0 0-.707-.708L8.683 7.293 6.536 5.146a.5.5 0 0 0-.707 0z"/>
   <path d="M13.683 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7.08a2 2 0 0 1-1.519-.698L.241 8.65a1 1 0 0 1 0-1.302L5.084 1.7A2 2 0 0 1 6.603 1h7.08zm-7.08 1a1 1 0 0 0-.76.35L1 8l4.844 5.65a1 1 0 0 0 .759.35h7.08a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-7.08z"/>
 </svg></button></div></div>
