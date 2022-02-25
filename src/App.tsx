@@ -13,7 +13,7 @@ const CLASS_CODES = [
   "rightSpot"
 ]
 
-const WORD = "pauley"
+const WORD = "papasu"
 
 function App(props: propInterface) {
 
@@ -25,44 +25,72 @@ function App(props: propInterface) {
       return
     }
     if (char === '↵') {
-
+      if (charMatrix[guessCount].length !== props.letterCount) return
+      let wordGuess:any = charMatrix[guessCount]
+      wordGuess = wordGuess.join('')
+      guess(wordGuess)
       return
     }
     if (char === '←') {
-
+      if (charMatrix[guessCount].length === 0) return
+      let cpy = charMatrix[guessCount]
+      cpy.pop()
+      setCharMatrix(prev => {
+        prev[guessCount] = cpy
+        return [...prev]
+      })
       return
     }
+    if (charMatrix[guessCount].length === props.letterCount) { // last position
+      return
+    }
+    let cpy = charMatrix[guessCount]
+    cpy.push(char)
+    setCharMatrix(prev => {
+      prev[guessCount] = cpy
+      return [...prev]
+    })
   }
 
   function guess(guess: string) {
     guess = guess.toLowerCase()
     let guessrow: number[] = new Array(props.letterCount).fill(0)
     let ignore = []
+    let ignorepos: number[] = []
     for (let i = 0; i < props.letterCount; i++) {
       if (guess[i] === WORD[i]) {
         guessrow[i] = 3
         ignore.push(i)
+        ignorepos.push(i)
       }
     }
     for (let i = 0; i < props.letterCount; i++) {
       if (ignore.includes(i)) continue;
       let pos = WORD.indexOf(guess[i])
       while (pos !== -1) {
-        if (!ignore.includes(pos)) {
-          guessrow[pos] = 2
-          ignore.push(pos)
+        // if (!ignore.includes(i)) {
+        if (!ignorepos.includes(pos)) {
+          guessrow[i] = 2
+          // ignore.push(i)
+          ignorepos.push(pos)
+          break;
         }
         pos = WORD.indexOf(guess[i], pos + 1)
       }
     }
-    guessrow.forEach(el => {
-      if (el === 0) el = 1
+    guessrow = guessrow.map((v) => {
+      if (v === 0) {
+        return 1
+      }
+      return v
     })
     setColorMatrix(current => {
       current[guessCount] = guessrow
       return current
     })
     setGuessCount(current => current + 1)
+    
+    // console.log(colorMatrix)
   }
 
   const [guessCount, setGuessCount] = useState(0)
@@ -74,8 +102,18 @@ function App(props: propInterface) {
     [],
     [],
   ])
+  const [charMatrix, setCharMatrix] = useState<string[][]>([
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+  ])
 
   useEffect(() => {
+    console.log(guessCount);
+    // guess('paapyp')
     document.documentElement.style.setProperty('--letterCount', props.letterCount.toString())
     window.addEventListener('keydown', (e: KeyboardEvent) => {e.preventDefault();handleKeyDown(e.key)})
     let keys = Array.from(document.getElementsByTagName('button'))
@@ -95,7 +133,7 @@ function App(props: propInterface) {
     let retval = []
     let n1 = props.letterCount
     for (let i = 0; i < n1; i++) {
-      retval.push(<div className={"letterBox " + CLASS_CODES[colorMatrix[n][i] || 0]} key={i}></div>)
+      retval.push(<div className={"letterBox " + CLASS_CODES[colorMatrix[n][i] || 0]} key={i}>{charMatrix[n][i] || ''}</div>)
     }
     return retval
   }
