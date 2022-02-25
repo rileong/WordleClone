@@ -36,7 +36,7 @@ function App(props: propInterface) {
   ])
 
   // const handleKeyDown = useCallback((char: string) => {
-  function handleKeyDown(char: string) {
+  function handleKeyDown(char: string) { // PUT THESE FUNCTIONS IN USE EFFECT (?)
     if (char === "Enter") char = '↵'
     if (char === "Backspace") char = '←'
     if (char === '7') {
@@ -81,7 +81,7 @@ function App(props: propInterface) {
     handleKeyDown(e.key)
   }, [guessCount])
 
-  function guess(guess: string) {
+  function guess(guess: string) { // PUT THESE FUNCTIONS IN USE EFFECT (?)
     guess = guess.toLowerCase()
     let guessrow: number[] = new Array(props.letterCount).fill(0)
     let ignore = []
