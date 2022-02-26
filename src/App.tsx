@@ -112,6 +112,7 @@ function App(props: propInterface) {
     // let keys = Array.from(document.querySelectorAll('#keyboard button'))
     // keys.forEach(el => {
     // })
+    setTimeout(() => {
     guessrow.forEach((item, index) => {
       let key = document.querySelector(`[data-key='${guess[index]}']`)
       if (key) {
@@ -129,9 +130,11 @@ function App(props: propInterface) {
           }
         } else {
           key.classList.add(CLASS_CODES[item])
+          // key.classList.toggle(CLASS_CODES[item])
         }
       }
     })
+    }, (props.letterCount * 0.2 + 0.2) * 1000)
     setColorMatrix(current => {
       current[guessCount] = guessrow
       return current
@@ -169,7 +172,7 @@ function App(props: propInterface) {
     let retval = []
     let n1 = props.letterCount
     for (let i = 0; i < n1; i++) {
-      retval.push(<div className={"letterBox " + CLASS_CODES[colorMatrix[n][i] || 0]} key={i}>{charMatrix[n][i] || ''}</div>)
+      retval.push(<div style={{transitionDelay: `${2 * i / 10}s`}} className={"letterBox " + CLASS_CODES[colorMatrix[n][i] || 0]} key={i}>{charMatrix[n][i] || ''}</div>)
     }
     return retval
   }

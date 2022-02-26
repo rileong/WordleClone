@@ -41,6 +41,7 @@ div {
   text-transform: uppercase;
   user-select: none;
   min-height: 0;
+  transition: background-color 0.5s;
 }
 
 @media (max-height: 600px) {
@@ -49,15 +50,6 @@ div {
     line-height: 1em;
   }
 }
-
-/* .lettersCont {
-  flex-direction: row;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  flex: 1;
-} */
 
 .lettersCont {
   display: grid;
@@ -74,15 +66,15 @@ div {
   src: url('/public/futura\ medium\ condensed\ bt.ttf')format("truetype");
 }
 
-.wrong {
+div.wrong {
   background-color: gray;
 }
 
-.rightSpot {
+div.rightSpot {
   background-color: dodgerblue;
 }
 
-.rightLetter {
+div.rightLetter {
   background-color: gold;
 }
 
@@ -99,7 +91,7 @@ button {
   color: white;
   background-color: #222;
   font-weight: bold;
-  /* box-sizing: border-box; */
+  transition: .5s;
 }
 
 button.wrong {
