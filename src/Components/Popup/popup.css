@@ -1,0 +1,24 @@
+.popup {
+    position: absolute;
+    color: black;
+    background-color: lightcyan;
+    border: 2px solid;
+    border-color: rgba(0, 0, 0, 0.3);
+    /* padding: 15%; */
+    width: 55%;
+    font-size: 2em;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.notvisible {
+    visibility: hidden;
+}
+
+.bi-x {
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    transform: scale(2.0, 2.0);
+}

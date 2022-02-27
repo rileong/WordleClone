@@ -1,0 +1,40 @@
+// MUST BE LOWERCASE (change later?)
+
+const WORDS = [
+    'janss',
+    'sigep',
+    'drake',
+    'covel',
+    'ophir',
+    // 'duffl',
+    'rolfe',
+    'study',
+    'royce',
+    'kappa',
+    'theta',
+    'bruin',
+    'fours',
+    'rende',
+    'piphi',
+    'tyger',
+    'young',
+    'stats',
+    'sproul',
+    'gayley',
+    'pauley',
+    'reagan',
+    'roccos',
+    'bunche',
+    'kelton',
+    'powell',
+    'bplate',
+    'rieber',
+    'phipsi',
+    'juzang',
+    'cogsci',
+    'physci',
+    'sigchi',
+    'deneve'
+]
+
+export default WORDS
