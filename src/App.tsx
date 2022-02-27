@@ -15,6 +15,8 @@ const CLASS_CODES = [
 
 const WORD = "pauley"
 
+const ANIM_DELAY = 0.5
+
 function App(props: propInterface) {
 
   const [guessCount, setGuessCount] = useState(0)
@@ -134,7 +136,7 @@ function App(props: propInterface) {
         }
       }
     })
-    }, (props.letterCount * 0.2 + 0.2) * 1000)
+    }, (props.letterCount * ANIM_DELAY + 0.2) * 1000)
     setColorMatrix(current => {
       current[guessCount] = guessrow
       return current
@@ -172,7 +174,7 @@ function App(props: propInterface) {
     let retval = []
     let n1 = props.letterCount
     for (let i = 0; i < n1; i++) {
-      retval.push(<div style={{transitionDelay: `${2 * i / 10}s`}} className={"letterBox " + CLASS_CODES[colorMatrix[n][i] || 0]} key={i}>{charMatrix[n][i] || ''}</div>)
+      retval.push(<div style={{transitionDelay: `${i * ANIM_DELAY}s`}} className={"letterBox " + CLASS_CODES[colorMatrix[n][i] || 0]} key={i}>{charMatrix[n][i] || ''}</div>)
     }
     return retval
   }
