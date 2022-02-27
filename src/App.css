@@ -92,6 +92,7 @@ button {
   background-color: #222;
   font-weight: bold;
   transition: .5s;
+  user-select: none;
 }
 
 button.wrong {

@@ -1,6 +1,8 @@
 // import React from 'react';
 import React, { useEffect, useState, useCallback } from 'react';
 import './App.css';
+// import WORDS from './lib/words'
+import Popup from './Components/Popup/Popup'
 
 interface propInterface {
   letterCount: number;
@@ -182,6 +184,7 @@ function App(props: propInterface) {
   return (
     <div className="App">
       <h1>WESTWORDLE</h1>
+      <Popup visible={true}></Popup>
       <div id="outerguess">
       <div id="guesscont">
       <div className="lettersCont">
