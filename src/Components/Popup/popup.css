@@ -6,19 +6,66 @@
     border-color: rgba(0, 0, 0, 0.3);
     /* padding: 15%; */
     width: 55%;
-    font-size: 2em;
+    /* font-size: 2em; */
     padding-top: 5%;
     padding-bottom: 5%;
+    border-radius: 15px;
+    white-space: pre-line;
+    transition: 0.5s;
+}
+
+.popup button {
+    /* color: green; */
+    background-color: green;
+    margin: 0 auto;
+    margin-bottom: 5%;
+    padding: 0 5%;
+    cursor: pointer;
+    /* background-image: linear-gradient(to top, red, blue); */
+    /* background-repeat: no-repeat; */
+    background-position: 0 0px;
+    width: 100px;
+}
+/* button width hardcoded for now to work with animation, try to find a fix for this TODO */
+@keyframes buttonAnim {
+    from {
+        background-image: linear-gradient(to right, green, lime);
+        background-position: -100px 0;
+    }
+    to {
+        background-image: linear-gradient(to right, green, lime);
+        background-position: 0;
+    }
+    /* to {
+        background-image: linear-gradient(to right, green, lime);
+        background-position: 0;
+    } */
+}
+
+.popup button:focus {
+    /* background-color: black; */
+    animation: buttonAnim 1s;
+    animation-fill-mode: forwards;
+}
+
+.popup p {
+    /* font-size: 1em; */
+    font-size: 2vmax;
+}
+
+.popup .header {
+    font-size: 2.5em;
 }
 
 .notvisible {
     visibility: hidden;
+    opacity: 0;
 }
 
 .bi-x {
     cursor: pointer;
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 8px;
+    right: 8px;
     transform: scale(2.0, 2.0);
 }

@@ -38,15 +38,18 @@ function App(props: propInterface) {
     [],
     [],
   ])
+  const [popupShown, setPopupShown] = useState(false) // TODO: eventually use create context to share this between child component
+  const [gameDone, setGameDone] = useState(false)
 
   // const handleKeyDown = useCallback((char: string) => {
-  function handleKeyDown(char: string) { // PUT THESE FUNCTIONS IN USE EFFECT (?)
+  function handleKeyDown(char: string) { // TODO: PUT THESE FUNCTIONS IN USE EFFECT (?)
     if (char === "Enter") char = '↵'
     if (char === "Backspace") char = '←'
     const checker = new RegExp('^[a-zA-Z←↵]{1}$')
-    if (!checker.test(char) || guessCount === 6) { // not a valid key
+    if (!checker.test(char) || guessCount === 6) { // not a valid key or used up guesses
       return
     }
+    if (gameDone) return
     if (char === '↵') {
       if (charMatrix[guessCount].length !== props.letterCount) return
       let wordGuess:any = charMatrix[guessCount]
@@ -79,7 +82,7 @@ function App(props: propInterface) {
   const actuallyHandleKeyDown = useCallback((e: KeyboardEvent) => {
     e.preventDefault()
     handleKeyDown(e.key)
-  }, [guessCount])
+  }, [guessCount, gameDone])
 
   function guess(guess: string) { // PUT THESE FUNCTIONS IN USE EFFECT (?)
     guess = guess.toLowerCase()
@@ -117,27 +120,32 @@ function App(props: propInterface) {
     // keys.forEach(el => {
     // })
     setTimeout(() => {
-    guessrow.forEach((item, index) => {
-      let key = document.querySelector(`[data-key='${guess[index]}']`)
-      if (key) {
-        if (key.classList.contains('rightSpot')) {
+      guessrow.forEach((item, index) => {
+        let key = document.querySelector(`[data-key='${guess[index]}']`)
+        if (key) {
+          if (key.classList.contains('rightSpot')) {
 
-        } else if (key.classList.contains('rightLetter')) {
-          if (item === 3) {
-            key.classList.remove('rightLetter')
-            key.classList.add('rightSpot')
-          }
-        } else if (key.classList.contains('wrong')) {
-          if (item > 1) {
-            key.classList.remove('wrong')
+          } else if (key.classList.contains('rightLetter')) {
+            if (item === 3) {
+              key.classList.remove('rightLetter')
+              key.classList.add('rightSpot')
+            }
+          } else if (key.classList.contains('wrong')) {
+            if (item > 1) {
+              key.classList.remove('wrong')
+              key.classList.add(CLASS_CODES[item])
+            }
+          } else {
             key.classList.add(CLASS_CODES[item])
+            // key.classList.toggle(CLASS_CODES[item])
           }
-        } else {
-          key.classList.add(CLASS_CODES[item])
-          // key.classList.toggle(CLASS_CODES[item])
         }
+      })
+      const correctGuess = guessrow.every(item => item === 3)
+      if (correctGuess) {
+        setPopupShown(true)
+        setGameDone(true)
       }
-    })
     }, (props.letterCount * ANIM_DELAY + 0.2) * 1000)
     setColorMatrix(current => {
       current[guessCount] = guessrow
@@ -170,7 +178,7 @@ function App(props: propInterface) {
         el.replaceWith(el.cloneNode(true))
       })
     }
-  }, [guessCount])
+  }, [guessCount, gameDone])
 
   function renderItems(n: number) {
     let retval = []
@@ -184,7 +192,7 @@ function App(props: propInterface) {
   return (
     <div className="App">
       <h1>WESTWORDLE</h1>
-      <Popup visible={true}></Popup>
+      <Popup setPopupShown={setPopupShown} popupShown={popupShown} colorMatrix={colorMatrix}></Popup>
       <div id="outerguess">
       <div id="guesscont">
       <div className="lettersCont">
