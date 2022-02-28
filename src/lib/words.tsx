@@ -34,7 +34,9 @@ const WORDS = [
     'cogsci',
     'physci',
     'sigchi',
-    'deneve'
+    'deneve',
+    'sunset',
+    'innout'
 ]
 
 export default WORDS

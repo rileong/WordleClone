@@ -5,10 +5,12 @@
     border: 2px solid;
     border-color: rgba(0, 0, 0, 0.3);
     /* padding: 15%; */
-    width: 55%;
+    width: 70%;
+    max-width: 500px;
     /* font-size: 2em; */
-    padding-top: 5%;
-    padding-bottom: 5%;
+    /* padding-top: 5%;
+    padding-bottom: 5%; */
+    height: 70%;
     border-radius: 15px;
     white-space: pre-line;
     transition: 0.5s;
@@ -49,8 +51,9 @@
 }
 
 .popup p {
-    /* font-size: 1em; */
-    font-size: 2vmax;
+    font-size: 1em;
+    /* font-size: 2vmax; */
+    line-height: auto;
 }
 
 .popup .header {

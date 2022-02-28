@@ -15,7 +15,7 @@ const CLASS_CODES = [
   "rightSpot"
 ]
 
-const WORD = "pauley"
+const WORD = "roccos"
 
 const ANIM_DELAY = 0.5
 
