@@ -164,7 +164,8 @@ function App(props: propInterface) {
     document.documentElement.style.setProperty('--letterCount', props.letterCount.toString())
     // window.addEventListener('keydown', (e: KeyboardEvent) => {e.preventDefault();handleKeyDown(e.key)})
     window.addEventListener('keydown', actuallyHandleKeyDown)
-    let keys = Array.from(document.getElementsByTagName('button'))
+    // let keys = Array.from(document.getElementsByTagName('button'))
+    let keys = Array.from(document.querySelectorAll('button:not(#shareButton)'))
     keys.forEach(el => {
       el.addEventListener('click', () => handleKeyDown(el.getAttribute('data-key') || ''))
     })
@@ -172,7 +173,8 @@ function App(props: propInterface) {
     return () => {
       // window.removeEventListener('keydown', (e: KeyboardEvent) => {e.preventDefault();handleKeyDown(e.key)})
       window.removeEventListener('keydown', actuallyHandleKeyDown)
-      Array.from(document.getElementsByTagName('button')).forEach(el => {
+      // Array.from(document.getElementsByTagName('button')).forEach(el => {
+        Array.from(document.querySelectorAll('button:not(#shareButton)')).forEach(el => {
         // el.removeEventListener('click', () => handleKeyDown(el.getAttribute('data-key') || ''))
         // el.removeEventListener('click', () => actuallyHandleButtonPress(el.getAttribute('data-key') || ''))
         el.replaceWith(el.cloneNode(true))

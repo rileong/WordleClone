@@ -46,7 +46,7 @@
 
 .popup button:focus {
     /* background-color: black; */
-    animation: buttonAnim 1s;
+    animation: buttonAnim 0.5s;
     animation-fill-mode: forwards;
 }
 
