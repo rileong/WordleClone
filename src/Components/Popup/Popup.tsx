@@ -1,5 +1,5 @@
 import './popup.css'
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 
 interface visible {
     setPopupShown: (param: boolean) => void

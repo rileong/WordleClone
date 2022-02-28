@@ -24,7 +24,7 @@
     padding: 0 5%;
     cursor: pointer;
     /* background-image: linear-gradient(to top, red, blue); */
-    /* background-repeat: no-repeat; */
+    background-repeat: no-repeat;
     background-position: 0 0px;
     width: 100px;
 }
@@ -34,20 +34,19 @@
         background-image: linear-gradient(to right, green, lime);
         background-position: -100px 0;
     }
+    50% {
+        background-image: linear-gradient(to right, green, lime);
+        background-position: 0px 0;
+    }
     to {
         background-image: linear-gradient(to right, green, lime);
-        background-position: 0;
+        background-position: 100px 0;
     }
-    /* to {
-        background-image: linear-gradient(to right, green, lime);
-        background-position: 0;
-    } */
 }
 
 .popup button:focus {
-    /* background-color: black; */
     animation: buttonAnim 0.5s;
-    animation-fill-mode: forwards;
+    /* animation-fill-mode: forwards; */
 }
 
 .popup p {
