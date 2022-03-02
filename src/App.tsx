@@ -145,6 +145,8 @@ function App(props: propInterface) {
       if (correctGuess) {
         setPopupShown(true)
         setGameDone(true)
+      } else if (guessCount === 5) {
+        // TODO: show pop up with correct answer
       }
     }, (props.letterCount * ANIM_DELAY + 0.2) * 1000)
     setColorMatrix(current => {
