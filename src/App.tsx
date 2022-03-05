@@ -1,11 +1,11 @@
 // import React from 'react';
 import React, { useEffect, useState, useCallback } from 'react';
 import './App.css';
-// import WORDS from './lib/words'
 import Popup from './Components/Popup/Popup'
 
 interface propInterface {
-  letterCount: number;
+  // letterCount: number;
+  word: string
 }
 
 const CLASS_CODES = [
@@ -15,7 +15,7 @@ const CLASS_CODES = [
   "rightSpot"
 ]
 
-const WORD = "roccos"
+// const WORD = "roccos"
 
 const ANIM_DELAY = 0.5
 
@@ -40,6 +40,7 @@ function App(props: propInterface) {
   ])
   const [popupShown, setPopupShown] = useState(false) // TODO: eventually use create context to share this between child component
   const [gameDone, setGameDone] = useState(false)
+  const [won, setWon] = useState(false)
 
   // const handleKeyDown = useCallback((char: string) => {
   function handleKeyDown(char: string) { // TODO: PUT THESE FUNCTIONS IN USE EFFECT (?)
@@ -51,7 +52,7 @@ function App(props: propInterface) {
     }
     if (gameDone) return
     if (char === '↵') {
-      if (charMatrix[guessCount].length !== props.letterCount) return
+      if (charMatrix[guessCount].length !== props.word.length) return
       let wordGuess:any = charMatrix[guessCount]
       wordGuess = wordGuess.join('')
       guess(wordGuess)
@@ -67,7 +68,7 @@ function App(props: propInterface) {
       })
       return
     }
-    if (charMatrix[guessCount].length === props.letterCount) { // last position
+    if (charMatrix[guessCount].length === props.word.length) { // last position
       return
     }
     let cpy = charMatrix[guessCount]
@@ -86,19 +87,19 @@ function App(props: propInterface) {
 
   function guess(guess: string) { // PUT THESE FUNCTIONS IN USE EFFECT (?)
     guess = guess.toLowerCase()
-    let guessrow: number[] = new Array(props.letterCount).fill(0)
+    let guessrow: number[] = new Array(props.word.length).fill(0)
     let ignore = []
     let ignorepos: number[] = []
-    for (let i = 0; i < props.letterCount; i++) {
-      if (guess[i] === WORD[i]) {
+    for (let i = 0; i < props.word.length; i++) {
+      if (guess[i] === props.word[i]) {
         guessrow[i] = 3
         ignore.push(i)
         ignorepos.push(i)
       }
     }
-    for (let i = 0; i < props.letterCount; i++) {
+    for (let i = 0; i < props.word.length; i++) {
       if (ignore.includes(i)) continue;
-      let pos = WORD.indexOf(guess[i])
+      let pos = props.word.indexOf(guess[i])
       while (pos !== -1) {
         // if (!ignore.includes(i)) {
         if (!ignorepos.includes(pos)) {
@@ -107,7 +108,7 @@ function App(props: propInterface) {
           ignorepos.push(pos)
           break;
         }
-        pos = WORD.indexOf(guess[i], pos + 1)
+        pos = props.word.indexOf(guess[i], pos + 1)
       }
     }
     guessrow = guessrow.map((v) => {
@@ -143,12 +144,15 @@ function App(props: propInterface) {
       })
       const correctGuess = guessrow.every(item => item === 3)
       if (correctGuess) {
+        setWon(true)
         setPopupShown(true)
         setGameDone(true)
       } else if (guessCount === 5) {
+        setPopupShown(true)
+        setGameDone(true)
         // TODO: show pop up with correct answer
       }
-    }, (props.letterCount * ANIM_DELAY + 0.2) * 1000)
+    }, (props.word.length * ANIM_DELAY + 0.2) * 1000)
     setColorMatrix(current => {
       current[guessCount] = guessrow
       return current
@@ -163,7 +167,7 @@ function App(props: propInterface) {
   useEffect(() => {
     // console.log(guessCount);
     // guess('paapyp')
-    document.documentElement.style.setProperty('--letterCount', props.letterCount.toString())
+    document.documentElement.style.setProperty('--letterCount', props.word.length.toString())
     // window.addEventListener('keydown', (e: KeyboardEvent) => {e.preventDefault();handleKeyDown(e.key)})
     window.addEventListener('keydown', actuallyHandleKeyDown)
     // let keys = Array.from(document.getElementsByTagName('button'))
@@ -186,7 +190,7 @@ function App(props: propInterface) {
 
   function renderItems(n: number) {
     let retval = []
-    let n1 = props.letterCount
+    let n1 = props.word.length
     for (let i = 0; i < n1; i++) {
       retval.push(<div style={{transitionDelay: `${i * ANIM_DELAY}s`}} className={"letterBox " + CLASS_CODES[colorMatrix[n][i] || 0]} key={i}>{charMatrix[n][i] || ''}</div>)
     }
@@ -196,7 +200,7 @@ function App(props: propInterface) {
   return (
     <div className="App">
       <h1>WESTWORDLE</h1>
-      <Popup setPopupShown={setPopupShown} popupShown={popupShown} colorMatrix={colorMatrix}></Popup>
+      <Popup answer={props.word} won={won} setPopupShown={setPopupShown} popupShown={popupShown} colorMatrix={colorMatrix}></Popup>
       <div id="outerguess">
       <div id="guesscont">
       <div className="lettersCont">
