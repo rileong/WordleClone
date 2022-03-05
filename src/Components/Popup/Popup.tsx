@@ -30,7 +30,7 @@ export default function Popup(props: visible) {
             })
             retString = retString.concat('\n')
         })
-        return retString
+        return retString.trim()
     }
 
     async function copyScore() {

@@ -6,7 +6,7 @@ const WORDS = [
     'drake',
     'covel',
     'ophir',
-    // 'duffl',
+    'duffl',
     'rolfe',
     'study',
     'royce',
@@ -36,7 +36,7 @@ const WORDS = [
     'sigchi',
     'deneve',
     'sunset',
-    'innout'
+    // 'innout'
 ]
 
 export default WORDS
