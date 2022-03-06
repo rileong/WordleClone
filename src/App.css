@@ -119,7 +119,7 @@ button.rightSpot {
 
 .one-and-a-half {
   flex: 1.5;
-  /* font-size: 12; */
+  font-size: min(2vmin, 12px);
 }
 
 .half {
@@ -127,8 +127,14 @@ button.rightSpot {
 }
 
 #keyboard {
-  /* width: 80%; */
-  width: 90%;
+  /* width: 90%; */
+  /* width: 100%; */
+  width: calc(100% - 16px);
+  /* width: auto; */
+  /* box-sizing: border-box; */
+  display: block;
+  margin: 0 8px;
+  
   max-width: 500px;
   /* position: absolute; */
   bottom: 0px;
