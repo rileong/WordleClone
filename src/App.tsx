@@ -164,6 +164,18 @@ function App(props: propInterface) {
 //   const [, updateState] = useState<any>()
 //   const forceUpdate = useCallback(() => updateState({}), [])
 
+  function setOuter() {
+    let outer = document.getElementById('outerguess')// = (window.innerHeight - 290).toString() + 'px'
+    if (outer) {
+      outer.style.height = (window.innerHeight - 290).toString() + 'px'
+    }
+  }
+
+  useEffect(() => {
+    setOuter()
+    window.onresize = setOuter
+  }, [])
+
   useEffect(() => {
     // console.log(guessCount);
     // guess('paapyp')
@@ -198,7 +210,7 @@ function App(props: propInterface) {
   }
 
   return (
-    <div className="App">
+    <div className="App"  tabIndex={0}>
       <h1>WESTWORDLE</h1>
       <Popup answer={props.word} won={won} setPopupShown={setPopupShown} popupShown={popupShown} colorMatrix={colorMatrix}></Popup>
       <div id="outerguess">
