@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-family: "CustomFont";
+  /* font-family: "CustomFont"; */
   /* height: 100vh; */
   /* flex-grow: 1; */
   /* flex: 1; */
@@ -67,10 +67,10 @@ div {
   max-height: 80%;
 }
 
-@font-face {
+/* @font-face {
   font-family: "CustomFont";
   src: url('/public/futura\ medium\ condensed\ bt.ttf')format("truetype");
-}
+} */
 
 div.wrong {
   background-color: gray;

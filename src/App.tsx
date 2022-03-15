@@ -2,6 +2,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import './App.css';
 import Popup from './Components/Popup/Popup'
+import WORDS from './lib/words'
+import Swal from 'sweetalert2'
 
 interface propInterface {
   // letterCount: number;
@@ -42,8 +44,14 @@ function App(props: propInterface) {
   const [gameDone, setGameDone] = useState(false)
   const [won, setWon] = useState(false)
 
+  async function checkDict(word: string) {
+    return await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+      .then(res => res.status)
+      // .then(res => res.json()).then(response => response.message)
+  }
+
   // const handleKeyDown = useCallback((char: string) => {
-  function handleKeyDown(char: string) { // TODO: PUT THESE FUNCTIONS IN USE EFFECT (?)
+  async function handleKeyDown(char: string) { // TODO: PUT THESE FUNCTIONS IN USE EFFECT (?)
     if (char === "Enter") char = '↵'
     if (char === "Backspace") char = '←'
     const checker = new RegExp('^[a-zA-Z←↵]{1}$')
@@ -53,9 +61,24 @@ function App(props: propInterface) {
     if (gameDone) return
     if (char === '↵') {
       if (charMatrix[guessCount].length !== props.word.length) return
-      let wordGuess:any = charMatrix[guessCount]
-      wordGuess = wordGuess.join('')
+      // if ()
+      // let wordGuess:any = charMatrix[guessCount]
+      // wordGuess = wordGuess.join('')
+      let wordGuess: string = charMatrix[guessCount].join('')
+      let res = await checkDict(wordGuess)
+      // console.log(res);
+      // console.log(wordGuess);
+      
+      if (res !== 200 && !WORDS.includes(wordGuess.toLowerCase())) {
+        // console.log("bad");
+        Swal.fire({
+          title: 'Not a valid word!',
+          icon: 'error'
+        })
+        return
+      }
       guess(wordGuess)
+      
       return
     }
     if (char === '←') {
