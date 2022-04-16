@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c1301f3b.css",
+    "main.js": "/static/js/main.f08fda0e.js",
+    "static/media/futura medium condensed bt.ttf": "/static/media/futura medium condensed bt.2423d8808228a8468e9c.ttf",
+    "index.html": "/index.html",
+    "main.c1301f3b.css.map": "/static/css/main.c1301f3b.css.map",
+    "main.f08fda0e.js.map": "/static/js/main.f08fda0e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c1301f3b.css",
+    "static/js/main.f08fda0e.js"
+  ]
+}
